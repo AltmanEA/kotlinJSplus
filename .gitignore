@@ -3,3 +3,8 @@
 /sharedData/gradle
 /sharedData/gradlew
 /sharedData/gradlew.bat
+/reduxStore/.gradle
+/reduxStore/.idea
+/reduxStore/gradle
+/reduxStore/gradlew
+/reduxStore/gradlew.bat
