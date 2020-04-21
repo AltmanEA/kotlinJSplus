@@ -3,7 +3,7 @@ plugins {
 }
 
 group 'ru.altmanEA.example.kotlinJsPlus'
-version '1.0-SNAPSHOT'
+version '0.1'
 
 def kotlinVersion = "1.3.70"
 def suffix = "-pre.94-kotlin-"

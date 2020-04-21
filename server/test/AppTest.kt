@@ -1,5 +1,4 @@
 import data.State
-import io.ktor.application.Application
 import io.ktor.http.*
 import io.ktor.server.testing.handleRequest
 import io.ktor.server.testing.setBody

@@ -1,0 +1,28 @@
+import react.dom.render
+import react.redux.provider
+import react.router.dom.hashRouter
+import kotlin.browser.document
+import redux.*
+import container.*
+import data.*
+
+
+val store: Store<State, RAction, WrapperAction> = createStore(
+    ::rootReducer,
+    initialState(),
+    compose(
+        rEnhancer(),
+        js("if(window.__REDUX_DEVTOOLS_EXTENSION__ )window.__REDUX_DEVTOOLS_EXTENSION__ ();else(function(f){return f;});")
+    )
+)
+
+fun main() {
+    render(document.getElementById("root")) {
+        provider(store) {
+            hashRouter {
+                appContainer {}
+            }
+        }
+    }
+}
+
