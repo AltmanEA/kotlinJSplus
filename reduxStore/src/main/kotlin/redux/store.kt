@@ -2,6 +2,11 @@ package redux
 
 import data.State
 
+class ReduxState(
+    val state: State,
+    val isLoad: Boolean
+)
+
 fun initialState() =
     State(
         mapOf(),
@@ -9,10 +14,11 @@ fun initialState() =
         mapOf()
     )
 
-fun store(): Store<State, RAction, WrapperAction> = createStore(
+fun store(): Store<ReduxState, RAction, WrapperAction> = createStore(
     ::rootReducer,
-    initialState(),
+    ReduxState(initialState(), true),
     compose(
+        rThunk(),
         rEnhancer(),
         js("if(window.__REDUX_DEVTOOLS_EXTENSION__ )window.__REDUX_DEVTOOLS_EXTENSION__ ();else(function(f){return f;});")
     )

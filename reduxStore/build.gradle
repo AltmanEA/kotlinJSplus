@@ -27,9 +27,16 @@ dependencies {
 }
 
 kotlin {
-    target.browser {}
+    target.browser {
+        testTask {
+            useKarma{
+                useChrome()
+            }
+        }
+    }
     sourceSets["main"].dependencies {
         implementation(npm("redux", "4.0.0"))
+        implementation(npm("cross-fetch", "3.0.4"))
     }
 }
 

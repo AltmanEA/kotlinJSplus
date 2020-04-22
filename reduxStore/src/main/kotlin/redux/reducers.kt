@@ -1,6 +1,7 @@
 package redux
 
 import data.*
+import kotlin.reflect.KProperty1
 
 fun presentsReducer(state: Presents, action: RAction, id: Int = -1) =
     when (action) {
@@ -56,7 +57,7 @@ fun studentsReducer(state: StudentState, action: RAction, newId: Int = -1) =
         else -> state
     }
 
-fun rootReducer(state: State, action: RAction) =
+fun stateReducer(state: State, action: RAction) =
     when (action) {
         is AddLesson -> {
             val id = state.lessons.newId()
@@ -81,3 +82,22 @@ fun rootReducer(state: State, action: RAction) =
                 presentsReducer(state.presents, action)
             )
     }
+
+fun rootReducer(state: ReduxState, action: RAction) =
+        when(action){
+            is RequestState ->
+                ReduxState(
+                    state.state,
+                    false
+                )
+            is ReceiveState ->
+                ReduxState(
+                    action.state,
+                    true
+                )
+            else ->
+                ReduxState(
+                    stateReducer(state.state, action),
+                    state.isLoad
+                )
+        }

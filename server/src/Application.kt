@@ -5,29 +5,15 @@ import io.ktor.http.*
 import io.ktor.response.*
 import io.ktor.routing.*
 import data.*
+import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
 import io.ktor.request.receive
 import io.ktor.serialization.json
-import io.ktor.serialization.serialization
 
 var state = State(
-    arrayOf(
-        "Lecture",
-        "Practice",
-        "Exam"
-    ).mapIndexed { index, lesson ->
-        index to Lesson(lesson)
-    }.toMap(),
-    arrayListOf(
-        Student("Sheldon", "Cooper"),
-        Student("Leonard", "Hofstadter"),
-        Student("Howard", "Wolowitz")
-    ).mapIndexed { index, student ->
-        index to student
-    }.toMap(),
-    arrayListOf(0, 1, 2).associateWith {
-        arrayListOf(0, 1, 2).associateWith { false }
-    }
+    mapOf(),
+    mapOf(),
+    mapOf()
 )
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
@@ -38,7 +24,13 @@ fun Application.module(testing: Boolean = false) {
     install(ContentNegotiation) {
         json()
     }
-
+    install(CORS) {
+        method(HttpMethod.Get)
+        method(HttpMethod.Post)
+        header(HttpHeaders.Origin)
+        header(HttpHeaders.ContentType)
+        anyHost()
+    }
     routing {
         get("/") {
             call.respond(state)
