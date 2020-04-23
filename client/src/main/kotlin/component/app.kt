@@ -9,6 +9,7 @@ import react.router.dom.*
 interface AppProps : RProps {
     var lessons: Map<Int, Lesson>
     var students: Map<Int, Student>
+    var isLoad: Boolean
 }
 
 interface RouteNumberResult : RProps {
@@ -27,61 +28,68 @@ fun fApp() =
             }
         }
 
-        switch {
-            route("/lessons",
-                exact = true,
-                render = { lessonListContainer { } }
-            )
-            route("/students",
-                exact = true,
-                render = { studentListContainer {} }
-            )
-            route(
-                "/lessons/:number",
-                exact = true,
-                render = renderObject(
-                    { props.lessons[it] },
-                    { index, lesson ->
-                        lessonFullContainer {
-                            attrs.obj = index to lesson
-                        }
-                    }
+        if (props.isLoad) {
+
+            netContainer {}
+
+            switch {
+                route("/lessons",
+                    exact = true,
+                    render = { lessonListContainer { } }
                 )
-            )
-            route(
-                "/students/:number",
-                exact = true,
-                render = renderObject(
-                    { props.students[it] },
-                    { index, student ->
-                        studentFullContainer {
-                            attrs.obj = index to student
-                        }
-                    }
+                route("/students",
+                    exact = true,
+                    render = { studentListContainer {} }
                 )
-            )
-            route(
-                "/lessons/:number/edit",
-                render = renderObject(
-                    { props.lessons[it] },
-                    { index, lesson ->
-                        lessonEditContainer {
-                            attrs.lesson = index to lesson
+                route(
+                    "/lessons/:number",
+                    exact = true,
+                    render = renderObject(
+                        { props.lessons[it] },
+                        { index, lesson ->
+                            lessonFullContainer {
+                                attrs.obj = index to lesson
+                            }
                         }
-                    }
+                    )
                 )
-            )
-            route(
-                "/students/:number/edit",
-                render = renderObject(
-                    { props.students[it] },
-                    { index, student ->
-                        studentEditContainer {
-                            attrs.student = index to student
+                route(
+                    "/students/:number",
+                    exact = true,
+                    render = renderObject(
+                        { props.students[it] },
+                        { index, student ->
+                            studentFullContainer {
+                                attrs.obj = index to student
+                            }
                         }
-                    }
+                    )
                 )
-            )
+                route(
+                    "/lessons/:number/edit",
+                    render = renderObject(
+                        { props.lessons[it] },
+                        { index, lesson ->
+                            lessonEditContainer {
+                                attrs.lesson = index to lesson
+                            }
+                        }
+                    )
+                )
+                route(
+                    "/students/:number/edit",
+                    render = renderObject(
+                        { props.students[it] },
+                        { index, student ->
+                            studentEditContainer {
+                                attrs.student = index to student
+                            }
+                        }
+                    )
+                )
+            }
+        } else {
+            p { +"Data is loading" }
         }
     }
 

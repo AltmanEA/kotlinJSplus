@@ -2,21 +2,9 @@ package redux
 
 import data.State
 
-class ReduxState(
-    val state: State,
-    val isLoad: Boolean
-)
-
-fun initialState() =
-    State(
-        mapOf(),
-        mapOf(),
-        mapOf()
-    )
-
-fun store(): Store<ReduxState, RAction, WrapperAction> = createStore(
+fun store(): Store<FullState, RAction, WrapperAction> = createStore(
     ::rootReducer,
-    ReduxState(initialState(), true),
+    initialState(),
     compose(
         rThunk(),
         rEnhancer(),

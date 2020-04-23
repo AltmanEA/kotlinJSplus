@@ -1,7 +1,6 @@
 package redux
 
 import data.*
-import kotlin.reflect.KProperty1
 
 fun presentsReducer(state: Presents, action: RAction, id: Int = -1) =
     when (action) {
@@ -83,20 +82,17 @@ fun stateReducer(state: State, action: RAction) =
             )
     }
 
-fun rootReducer(state: ReduxState, action: RAction) =
+fun rootReducer(state: FullState, action: RAction) =
         when(action){
             is RequestState ->
-                ReduxState(
-                    state.state,
-                    false
-                )
+                FullState(state, false)
             is ReceiveState ->
-                ReduxState(
+                FullState(
                     action.state,
                     true
                 )
             else ->
-                ReduxState(
+                FullState(
                     stateReducer(state.state, action),
                     state.isLoad
                 )

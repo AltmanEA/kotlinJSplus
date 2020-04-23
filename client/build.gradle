@@ -45,6 +45,7 @@ kotlin {
         implementation(npm("redux", "4.0.0"))
         implementation(npm("react-redux", "7.1.1"))
         implementation(npm("redux-logger", "3.0.6"))
+        implementation(npm("cross-fetch", "3.0.4"))
     }
 }
 

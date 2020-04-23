@@ -9,6 +9,7 @@ import io.ktor.features.CORS
 import io.ktor.features.ContentNegotiation
 import io.ktor.request.receive
 import io.ktor.serialization.json
+import java.lang.Thread.sleep
 
 var state = State(
     mapOf(),
@@ -33,6 +34,7 @@ fun Application.module(testing: Boolean = false) {
     }
     routing {
         get("/") {
+            sleep(1000)
             call.respond(state)
         }
         post("/") {
