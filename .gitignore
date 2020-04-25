@@ -23,3 +23,9 @@
 /client/gradle
 /client/gradlew
 /client/gradlew.bat
+/guiTest/.gradle
+/guiTest/.idea
+/guiTest/build
+/guiTest/gradle
+/guiTest/gradlew
+/guiTest/gradlew.bat
